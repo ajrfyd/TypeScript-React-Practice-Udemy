@@ -32,20 +32,23 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
   const activateMonacoJSXHighlighter: OnMount = async (monacoEditor, monaco) => {
     // monaco-jsx-highlighter depends on these in addition to Monaco and an instance of a Monaco Editor.
+    // const { default: traverse } = await import("@babel/traverse");
+    // const { parse } = await import("@babel/parser");
+    // >>> The star of the show =P >>>
+    // const { default: MonacoJSXHighlighter, JSXTypes } = await import(
+    //   "monaco-jsx-highlighter" // Note: there is a polyfilled version alongside the regular version.
+    // ); // For example, starting with 2.0.2, 2.0.2-polyfilled is also available.
     const { default: traverse } = await import("@babel/traverse");
     const { parse } = await import("@babel/parser");
-    // >>> The star of the show =P >>>
-    const { default: MonacoJSXHighlighter, JSXTypes } = await import(
-      "monaco-jsx-highlighter" // Note: there is a polyfilled version alongside the regular version.
-    ); // For example, starting with 2.0.2, 2.0.2-polyfilled is also available.
-  
+
     // Instantiate the highlighter
-    const monacoJSXHighlighter = new MonacoJSXHighlighter(
-      //@ts-ignore
-      window.monaco, // references Range and other APIs
+    const monacoJSXHighlighter = new Highlighter(
+      monaco, // highlights the content of that editor via decorations
       parse, // obtains an AST, internally passes to parse options: {...options, sourceType: "module",plugins: ["jsx"],errorRecovery: true}
-      traverse, // helps collecting the JSX expressions within the AST
-      monacoEditor // highlights the content of that editor via decorations
+      //@ts-ignore
+      traverse, // references Range and other APIs
+      // helps collecting the JSX expressions within the AST
+      monacoEditor,
     );
 
     console.log(monacoJSXHighlighter)
