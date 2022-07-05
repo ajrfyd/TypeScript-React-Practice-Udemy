@@ -4,11 +4,12 @@ import * as monaco from 'monaco-editor';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import './code-editor.css';
-import codeShift from 'jscodeshift';
+// import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
-import { Buffer } from 'buffer';
-// import { parse } from '@babel/parser';
-// import traverse from '@babel/traverse';
+import { parse } from '@babel/parser';
+import traverse from '@babel/traverse';
+
+
 
 interface CodeEditorProps {
   initialValue: string;
@@ -35,23 +36,23 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     // const { default: traverse } = await import("@babel/traverse");
     // const { parse } = await import("@babel/parser");
     // >>> The star of the show =P >>>
-    // const { default: MonacoJSXHighlighter, JSXTypes } = await import(
+    // const { default: Highlighter, JSXTypes } = await import(
     //   "monaco-jsx-highlighter" // Note: there is a polyfilled version alongside the regular version.
     // ); // For example, starting with 2.0.2, 2.0.2-polyfilled is also available.
-    const { default: traverse } = await import("@babel/traverse");
-    const { parse } = await import("@babel/parser");
 
-    // Instantiate the highlighter
-    const monacoJSXHighlighter = new Highlighter(
-      monaco, // highlights the content of that editor via decorations
-      parse, // obtains an AST, internally passes to parse options: {...options, sourceType: "module",plugins: ["jsx"],errorRecovery: true}
-      //@ts-ignore
-      traverse, // references Range and other APIs
-      // helps collecting the JSX expressions within the AST
-      monacoEditor,
-    );
+    //! Instantiate the highlighter
+    // const highlighter = new Highlighter(
+    //   monaco, // highlights the content of that editor via decorations
+    //   parse, // obtains an AST, internally passes to parse options: {...options, sourceType: "module",plugins: ["jsx"],errorRecovery: true}
+    //   // @ts-ignore
+    //   traverse, // references Range and other APIs
+    // //   // helps collecting the JSX expressions within the AST
+    //   monacoEditor,
+    // ); 
 
-    console.log(monacoJSXHighlighter)
+    // monacoJSXHighlighter.highlightOnDidChangeModelContent();
+
+    // console.log(monacoJSXHighlighter)
   }
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
@@ -136,7 +137,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
           automaticLayout: true,
           tabSize: 2,
         }}
-      />;
+      />
     </div>
   )
 };
