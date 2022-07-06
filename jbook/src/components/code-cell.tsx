@@ -9,6 +9,16 @@ const CodeCell = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
   
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const outPut = await bundle(input);
+      setCode(outPut);
+    }, 750)
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [input])
 
   // const startService = async () => {
   //   await esbuild.initialize({
