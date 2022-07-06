@@ -4,11 +4,11 @@ import * as monaco from 'monaco-editor';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import './code-editor.css';
-// import codeShift from 'jscodeshift';
+import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
-
+import './syntax.css';
 
 
 interface CodeEditorProps {
@@ -30,6 +30,9 @@ export type OnChange = (
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>();
+  
+  // console.log(codeShift);
+  // console.log(traverse);
 
   const activateMonacoJSXHighlighter: OnMount = async (monacoEditor, monaco) => {
     // monaco-jsx-highlighter depends on these in addition to Monaco and an instance of a Monaco Editor.
@@ -124,7 +127,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         onChange={handleChange}
         value={initialValue}
         theme='vs-dark' 
-        height='500px' 
+        height='100%' 
         language='javascript'
         options={{
           wordWrap: 'on',
@@ -135,7 +138,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
           fontSize: 16,
           scrollBeyondLastLine: false,
           automaticLayout: true,
-          tabSize: 2,
+          // tabSize: 2,
         }}
       />
     </div>

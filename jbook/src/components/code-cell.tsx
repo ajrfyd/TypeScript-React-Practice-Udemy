@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import * as esbuild from 'esbuild-wasm';
-import { unpkgPathPlugin } from "../plugins/unpkg-path-plugins";
-import { fetchPlugin } from "../plugins/fetch-plugin";
 import CodeEditor from '../components/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import Preview from '../components/preview';
 import bundle from '../bundler/index';
+import Resizable from "./resizable";
 
 const CodeCell = () => {
   const [input, setInput] = useState('');
@@ -54,18 +52,22 @@ const CodeCell = () => {
 
   
   return (
-    <div>
-      <CodeEditor 
-        initialValue="const a = 1;"
-        onChange={(value) => setInput(value)}
-      />
-      <div>
-        <button onClick={onClick}>
-          Submit
-        </button>
+    <Resizable direction="ver">
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+        <Resizable direction="hor">
+          <CodeEditor 
+            initialValue="const a = 1;"
+            onChange={(value) => setInput(value)}
+          />
+        </Resizable>
+        {/* <div>
+          <button onClick={onClick}>
+            Submit
+          </button>
+        </div> */}
+        <Preview code={code}/>
       </div>
-      <Preview code={code}/>
-    </div>
+    </Resizable>
   )
 }
 
