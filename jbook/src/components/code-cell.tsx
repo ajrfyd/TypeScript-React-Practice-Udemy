@@ -7,12 +7,14 @@ import Resizable from "./resizable";
 
 const CodeCell = () => {
   const [input, setInput] = useState('');
+  const [err, setErr] = useState('');
   const [code, setCode] = useState('');
   
   useEffect(() => {
     const timer = setTimeout(async () => {
       const outPut = await bundle(input);
-      setCode(outPut);
+      setCode(outPut.code);
+      setErr(outPut.err);
     }, 750)
 
     return () => {
@@ -45,8 +47,8 @@ const CodeCell = () => {
     // }).then(result => {
     //   setCode(result.outputFiles[0].text);
     // });
-    const output = await bundle(input);
-    setCode(output);
+    // const output = await bundle(input);
+    // setCode(output.code);
   }
 
   // useEffect(() => {
@@ -75,7 +77,7 @@ const CodeCell = () => {
             Submit
           </button>
         </div> */}
-        <Preview code={code}/>
+        <Preview code={code} err={err}/>
       </div>
     </Resizable>
   )

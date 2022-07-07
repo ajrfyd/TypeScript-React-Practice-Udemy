@@ -7,7 +7,7 @@ import './code-editor.css';
 import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 import { parse } from '@babel/parser';
-import traverse from '@babel/traverse';
+// import traverse from '@babel/traverse';
 import './syntax.css';
 
 

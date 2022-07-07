@@ -1,11 +1,18 @@
-import CodeCell from './components/code-cell';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import React from 'react';
+import CodeCell from './components/code-cell';
+import TextEditor from './components/text-editor';
+import { useSelector } from 'react-redux';
+import { RootState } from './state/reducers';
 
 const App = () => {
+  const { cells } = useSelector((state: RootState) => state);
+  console.log(cells);
+
   return (
     <>
-      <CodeCell />
       {/* <CodeCell /> */}
+      <TextEditor />
     </>
     )
 };
